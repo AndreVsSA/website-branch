@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid View</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <header>
+        <h1>Serviços</h1>
+    </header>
+    <div class="grid-view">
+        <div class="grid-item" data-service="guincho">
+            Guincho<br>
+            <i class="fas fa-car-crash fa-3x"></i> <!-- Ícone de acidente de carro -->
+        </div>
+        <div class="grid-item" data-service="posto">
+            Posto<br>
+            <i class="fas fa-gas-pump fa-3x"></i> <!-- Ícone de posto de gasolina -->
+        </div>
+        <div class="grid-item" data-service="borracheiro">
+            Borracheiro<br>
+            <i class="material-icons" style="font-size: 96px;">car_repair</i> <!-- Ícone de conserto de carro -->
+        </div>
+        <div class="grid-item" data-service="eletricista">
+            Eletricista<br>
+            <i class="fas fa-bolt fa-3x"></i> <!-- Ícone de eletricista -->
+        </div>
+        <div class="grid-item" data-service="mecanico">
+            Mecânico<br>
+            <i class="fas fa-wrench fa-3x"></i> <!-- Ícone de mecânico -->
+        </div>
+        <div class="grid-item" data-service="chaveiro">
+            Chaveiro<br>
+            <i class="fas fa-key fa-3x"></i> <!-- Ícone de chaveiro -->
+        </div>
+    </div>
+    
+    
+       
+       
+        <div id="service-menu">
+            <input type="text" id="searchBar" class="search-bar" placeholder="Pesquisar por cidade...">
+            <ul id="service-list"></ul>
+        </div>
+        <div id="service-details" class="hidden"></div>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>

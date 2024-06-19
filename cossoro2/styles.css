@@ -1,6 +1,6 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f0f0f0;
+    background-color: #443f3f80;
     margin: 0;
     padding: 0;
     display: flex;
@@ -15,7 +15,6 @@ body {
     overflow-x: hidden;
 }
 
-
 body::before {
     content: '';
     position: absolute;
@@ -23,18 +22,16 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    
     background-image: url('pho.png');
     background-size: contain;
     background-repeat: no-repeat;
-    background-attachment: scroll, local;
     background-position: center;
-    opacity: 0.3; /* Opacidade de 30% */
+    opacity: 0.3;
     z-index: -1;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #ff9900;
     color: white;
     padding: 15px;
     text-align: center;
@@ -54,32 +51,26 @@ main {
 }
 
 .grid-view {
-    text-align: center; /* Centraliza o texto e o ícone */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     display: grid;
-    height: 100%;
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
-    gap: 20px; /* Espaçamento entre itens */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     padding: 20px;
-    margin-top: 30px; /* Aumenta o espaço entre o topo e o gridview */
+    margin-top: 30px;
     z-index: 1;
 }
 
 .grid-item {
-    
     background-color: #fff;
-    border-radius: 15px; /* Bordas arredondadas */
+    border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s;
-    aspect-ratio: 1 / 1; /* Tornar os elementos quadrados */
-    font-size: 1.5rem; /* Ajustar o tamanho da fonte */
-    height: 230px; /* Aumentar o tamanho dos quadrados */
+    aspect-ratio: 1 / 1;
+    font-size: 1.5rem;
+    height: 230px;
 }
+
 .grid-item i {
     height: 80%;
     margin-bottom: 20px;
@@ -104,17 +95,6 @@ main {
     margin: 20px auto;
     z-index: 1;
 }
-.search-bar {
-    display: none;
-}
-
-#search {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-    font-size: 1rem; /* Ajustando o tamanho da fonte */
-}
 
 #service-list {
     list-style: none;
@@ -131,25 +111,46 @@ main {
 
 .service-item h3 {
     margin: 0 0 5px 0;
-    font-size: 1rem; /* Ajustando o tamanho da fonte */
+    font-size: 1rem;
 }
 
 .service-item p {
     margin: 5px 0;
-    font-size: 0.9rem; /* Ajustando o tamanho da fonte */
+    font-size: 0.9rem;
 }
 
 .service-item button {
-    background-color: #4CAF50;
+    background-color: #ff9900;
     color: white;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s;
-    font-size: 0.8rem; /* Ajustando o tamanho da fonte */
+    font-size: 0.8rem;
 }
 
 .service-item button:hover {
-    background-color: #45a049;
+    background-color: #ff9900;
+}
+
+#searchBar {
+    display: none;
+    height: 60px; /* Ajuste conforme necessário */
+    width: 80%; /* Ajuste conforme necessário */
+    margin: 10px auto;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
 }

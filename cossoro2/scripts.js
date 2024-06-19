@@ -1,59 +1,51 @@
-document.querySelectorAll('.grid-item').forEach(item => {
-    item.addEventListener('click', async () => {
-       
-        const response = await fetch('https://qap-token-auth.onrender.com/empresas');
-        let services = [];
-        const serviceType = item.dataset.service;
-       
+document.addEventListener("DOMContentLoaded", function() {
+    const url = 'https://qap-token-auth.onrender.com/empresas';
+    const servicesList = document.getElementById('servicesList');
+    const searchBar = document.getElementById('searchBar');
+    let services = [];
 
-        if (response.ok) {
-            const data = await response.json();
-            services = Array.isArray(data) ? data : [];
-        } else {
-            console.error('Failed to fetch services:', response.statusText);
-        }
-
-        displayServices(services, serviceType);
-        document.getElementById('search').focus();
-        
+    searchBar.addEventListener('input', function() {
+        const searchValue = searchBar.value.toLowerCase();
+        const filteredServices = services.filter(service => {
+            return (
+                service.endereco.cidade.toLowerCase().includes(searchValue) ||
+                service.endereco.estado.toLowerCase().includes(searchValue) ||
+                service.tipoServico.toLowerCase().includes(searchValue)
+            );
+        });
+        displayServices(filteredServices);
     });
-});
 
-function displayServices(services, serviceType) {
-    const serviceList = document.getElementById('service-list');
-    serviceList.innerHTML = '';
+    function displayServices(services) {
+        servicesList.innerHTML = '';
+        services.forEach(service => {
+            const li = document.createElement('li');
+            li.textContent = `Nome: ${service.nome}, Endereço: ${service.endereco.estado}, ${service.endereco.cidade}, ${service.endereco.bairro}, ${service.endereco.rua}, ${service.endereco.numero}, Telefone: ${service.telefone}, Tipo de serviço: ${service.tipoServico}`;
+            servicesList.appendChild(li);
+        });
+    }
 
-    services
-        .filter(service => service.tipo.toLowerCase() === serviceType.toLowerCase())
-        .forEach(service => {
-            const listItem = document.createElement('li');
-            listItem.className = 'service-item';
-            listItem.innerHTML = `
-                <h3>${service.nome}</h3>
-                <p>Endereço: ${service.endereco.rua}, ${service.endereco.numero} - ${service.endereco.bairro}, ${service.endereco.cidade}, ${service.endereco.estado}</p>
-                <p>Telefone: ${service.telefone}</p>
-                <button onclick="showServiceDetails(${JSON.stringify(service).replace(/"/g, '&quot;')})">Ver detalhes</button>
-            `;
-            serviceList.appendChild(listItem);
+    function displaySearchBar() {
+        searchBar.style.display = 'block';
+        searchBar.focus();
+    }
+
+    document.querySelectorAll('.grid-item').forEach(item => {
+        item.addEventListener('click', displaySearchBar);
+    });
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            services = data;
+            displayServices(services);
+        })
+        .catch(error => {
+            console.error('Erro ao obter serviços:', error);
         });
 
-    document.getElementById('service-menu').classList.remove('hidden');
-    document.getElementById('service-details').classList.add('hidden');
-}
-
-function showServiceDetails(service) {
-    const serviceDetails = document.getElementById('service-details');
-    serviceDetails.innerHTML = `
-        <h2>${service.nome}</h2>
-        <p>Endereço: ${service.endereco.rua}, ${service.endereco.numero} - ${service.endereco.bairro}, ${service.endereco.cidade}, ${service.endereco.estado}</p>
-        <p>Telefone: ${service.telefone}</p>
-        <p>Tipo de serviço: ${service.tipo}</p>
-        <button onclick="hideServiceDetails()">Fechar</button>
-    `;
-    serviceDetails.classList.remove('hidden');
-    document.getElementById('service-menu').classList.remove('hidden');
-}
-
-function hideServiceDetails() {
-    document.getElementById('service-details').classList.add('hidden');
-}
+    /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+    particlesJS.load('particles-js', 'particles.json', function() {
+        console.log('particles.js loaded - callback');
+    });
+});

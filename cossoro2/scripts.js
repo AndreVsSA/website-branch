@@ -1,20 +1,36 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const url = 'https://qap-token-auth.onrender.com/empresas';
-    const servicesList = document.getElementById('servicesList');
-    const searchBar = document.getElementById('searchBar');
+document.addEventListener("DOMContentLoaded", function () {
+
+    let serviceType = [];
     let services = [];
 
-    searchBar.addEventListener('input', function() {
+    //const url = `https://qap-token-auth.onrender.com/empresas`;
+
+    const servicesList = document.getElementById('services-list');
+    const searchBar = document.getElementById('searchBar');
+
+    const item = document.querySelectorAll('.grid-item');
+
+    searchBar.addEventListener('input', function () {
         const searchValue = searchBar.value.toLowerCase();
         const filteredServices = services.filter(service => {
-            return (
-                service.endereco.cidade.toLowerCase().includes(searchValue) ||
-                service.endereco.estado.toLowerCase().includes(searchValue) ||
+            console.log(service.cidade.toLowerCase().includes(searchValue));
+
+             return (
+                service.cidade.toLowerCase().includes(searchValue) ||
+                service.estado.toLowerCase().includes(searchValue) ||
                 service.tipoServico.toLowerCase().includes(searchValue)
-            );
+            ); 
         });
         displayServices(filteredServices);
     });
+
+    //seta event listener nos icones
+
+    for (let i = 0; i < item.length; i++) {
+        serviceType.push(item[i].getAttribute('data-service'));
+
+        item[i].addEventListener('click', displaySearchBar(i));
+    }
 
     function displayServices(services) {
         servicesList.innerHTML = '';
@@ -25,27 +41,34 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function displaySearchBar() {
+    //função que acessa a api e puxa os dados
+
+    function displaySearchBar(value) {
+        const url = `https://qap-token-auth.onrender.com/empresas?service=${serviceType[value]}`;
+        
         searchBar.style.display = 'block';
         searchBar.focus();
+
+        //executa a chamada da api
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                services = data;
+                console.log(services);
+                //displayServices(services);
+            })
+            .catch(error => {
+                console.error('Erro ao obter serviços:', error);
+            });
+
     }
 
-    document.querySelectorAll('.grid-item').forEach(item => {
-        item.addEventListener('click', displaySearchBar);
-    });
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            services = data;
-            displayServices(services);
-        })
-        .catch(error => {
-            console.error('Erro ao obter serviços:', error);
-        });
+    //inicializa as particulas
 
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-    particlesJS.load('particles-js', 'particles.json', function() {
+    particlesJS.load('particles-js', 'particles.json', function () {
         console.log('particles.js loaded - callback');
     });
+
 });
